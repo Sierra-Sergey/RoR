@@ -462,47 +462,104 @@ p array.select {|e| e.even?}
 p '--------------------------------------------------------'
 
 
-p 'Дан целочисленный массив. Проверить, чередуются ли в нем четные и нечетные числа.'
-array_rotate = [2,3,2,3,2,3,2,3,2,3,2]
-p array_rotate.each_index.find(-> {'rotate'}) {|i| (array_rotate[i].even? && array_rotate[i+1] != nil && array_rotate[i+1].even?)}
+p '61. Дан целочисленный массив. Проверить, чередуются ли в нем четные и нечетные числа.'
+array_rotate = [1, 2, 1, 2, 1, 2, 1, 2, 1]
+def check_rotate_even_odd array
+  bool = true
+  for e in 0..array.length - 2
+    bool = array[e].even?
+    if array[e + 1].even? == bool
+      p 'not rotate'
+      return
+    end
+  end
+  p 'rotate'
+end
+p 'check_rotate_even_odd array_rotate'
+check_rotate_even_odd array_rotate
 p '--------------------------------------------------------'
 
 
-p 'Дано вещественное число R и массив вещественных чисел. Найти два элемента массива, сумма которых наиболее близка к данному числу.'
+p '62. Дан целочисленный массив. Проверить, чередуются ли в нем положительные и отрицательные числа.'
+array_rotate = [1, -2, 1, 2, 1, -2, 1, -2, 1]
+def check_rotate_positive_negative array
+  bool = true
+  for e in 0..array.length - 2
+    bool = array[e].positive?
+    if array[e + 1].positive? == bool
+      p 'not rotate'
+      return
+    end
+  end
+  p 'rotate'
+end
+p 'check_rotate_positive_negative array_rotate'
+check_rotate_positive_negative array_rotate
+p '--------------------------------------------------------'
+
+
+p '63. Дано вещественное число R и массив вещественных чисел. Найти два элемента массива, сумма которых наиболее близка к данному числу.'
 array_float = [2.34, 7.34, 76.57, 45.8, 4.35, 2.93]
 num_R = 28.43
-def print_2_elements_sum_close_to_num(array, num)
+def sum_close_to_num(array, num)
   e1 = array[0]
   e2 = array[1]
   sum = (e1 + e2).abs
   diff = (num - sum).abs
 
   array.each_index do |i|
-
-    i2 = i
-    while i2 != array.count-1
-      sum = array[i] + array[i2+1]
+    i2 = i + 1
+    while i2 < array.count
+      sum = array[i] + array[i2]
       if (num - sum).abs < diff
         e1 = array[i]
-        e2 = array[i2+1]
+        e2 = array[i2]
         diff = (num - sum).abs
       end
-      i2 = i2+1
-
+      i2 += 1
     end
   end
   p e1
   p e2
 end
-p 'print_2_elements_sum_close_to_num(array_float, num_R)'
-print_2_elements_sum_close_to_num(array_float, num_R)
+p 'sum_close_to_num(array_float, num_R)'
+sum_close_to_num(array_float, num_R)
+p '--------------------------------------------------------'
+
+
+p '64. Дано вещественное число R и массив вещественных чисел. Найти два элемента массива, сумма которых наименее близка к данному числу.'
+array_float = [2.34, 7.34, 76.57, 45.8, 14.35, 12.93]
+num_R = 28.43
+def sum_close_to_num(array, num)
+  e1 = array[0]
+  e2 = array[1]
+  sum = (e1 + e2).abs
+  diff = (num - sum).abs
+
+  array.each_index do |i|
+    i2 = i + 1
+    while i2 < array.count
+      sum = array[i] + array[i2]
+      if (num - sum).abs > diff
+        e1 = array[i]
+        e2 = array[i2]
+        diff = (num - sum).abs
+      end
+      i2 += 1
+    end
+  end
+  p e1
+  p e2
+end
+p 'sum_close_to_num(array_float, num_R)'
+sum_close_to_num(array_float, num_R)
 p '--------------------------------------------------------'
 
 
 p 'Дан целочисленный массив. Удалить все элементы, встречающиеся менее двух раз.'
 arr = [1,2,2,6,3,3,3,4,4,4,4,5,5,5,5,5,6,6,6,6,6]
 
-def delete_all_uniq_elements array
+def delete_uniq_elements array
   for el in 0..array.length - 1
 
     if (array.length - (array - [array[el]]).length) < 2
@@ -511,8 +568,8 @@ def delete_all_uniq_elements array
   end
   p array
 end
-p '1) delete_all_uniq_elements (arr)'
-delete_all_uniq_elements (arr)
+p '1) delete_uniq_elements (arr)'
+delete_uniq_elements (arr)
 # p '2) arr.delete_if {|e| (arr.length - (arr - [arr[arr.index(e)]]).length) < 5}'
 # arr.delete_if {|e| (arr.length - (arr - [arr[arr.index(e)]]).length) > 5}
 # p arr
