@@ -1,68 +1,123 @@
-array = [ 61, -5, -5, 7, 78, -5, 3, 0, 6, 8, -5, 4, 9 ]
+array = [ 61, -5, 7, 78, -4, 187, 3, 0, 6, 8, 87, -5, 4, 95 ]
 
-p 'Дан целочисленный массив. Необходимо вывести вначале его элементы с четными индексами, а затем - с нечетными.'
-p 'puts array.each_index.find_all {|e| print array[e].to_s+', 'if x%2==0}'
-p 'puts array.each_index.find_all {|e| print array[e].to_s+', 'if x%2!=0}'
-puts array.each_with_index.find_all {|e,i| e if i.even?}
-puts array.each_with_index.find_all {|e,i| e if i%2!=0}
+p '1. Дан целочисленный массив. Необходимо вывести вначале его элементы с четными индексами, а затем - с нечетными.'
+p 'p array.each_index.map { |i| array[i] if i.even? } - [nil]'
+p 'array.each_index.map { |i| array[i] if i.odd? } - [nil]'
+p array.each_index.map { |i| array[i] if i.even? } - [nil]
+p array.each_index.map { |i| array[i] if i.odd? } - [nil]
+p '--------------------------------------------------------'
+
+p '2. Дан целочисленный массив. Необходимо вывести вначале его элементы с нечетными индексами, а затем - четными.'
+p 'p array_odd'
+p 'p array_even'
+array_odd = Array.new
+array_even = Array.new
+array.each_with_index { |e,i| array_odd << e if i.odd? }
+array.each_with_index { |e,i| array_even << e if i.even? }
+p array_odd
+p array_even
+p '--------------------------------------------------------'
+
+p '3. Дан целочисленный массив. Вывести номер первого из тех его элементов, которые удовлетворяют двойному неравенству: A[0] < A[i] < A[-1]. Если таких элементов нет, то вывести [ ].'
+p 'p array.index(array.find(-> {[]}) { |i| array[0] < i && i < array[-1] })'
+p array.index(array.find(-> {[]}) { |i| array[0] < i && i < array[-1] })
 p '--------------------------------------------------------'
 
 
-p 'Дан целочисленный массив. Вывести номер первого из тех его элементов, которые удовлетворяют двойному неравенству: A[0] < A[i] < A[-1]. Если таких элементов нет, то вывести [ ].'
-p 'p array.index {|x| p x if array[0]<x and x<array[-1]}'
-p array.index.find(-> {[]}) {|x| array[0]<x and x<array[-1]}
+p '4. Дан целочисленный массив. Вывести номер последнего из тех его элементов, которые удовлетворяют двойному неравенству: A[0] < A[i] < A[-1]. Если таких элементов нет, то вывести [ ].'
+p 'p array.rindex(array.reverse.find(-> {[]}) { |i| array[0]<i && i<array[-1] })'
+p array.rindex(array.reverse.find(-> {[]}) { |i| array[0]<i && i<array[-1] })
 p '--------------------------------------------------------'
 
 
-p 'Дан целочисленный массив. Вывести номер последнего из тех его элементов, которые удовлетворяют двойному неравенству: A[0] < A[i] < A[-1]. Если таких элементов нет, то вывести [ ].'
-p 'p array.rindex {|x| p x if array[0]<x and x<array[-1]}'
-p array.rindex.find(-> {[ ]}) {|x| array[0] < x and x < array[-1]}
-p '--------------------------------------------------------'
-
-
-p 'Дан целочисленный массив. Преобразовать его, прибавив к четным числам первый элемент. Первый и последний элементы массива не изменять.'
-def arr array
-  array.each_index.map do |e|
-    if e > 0
-      if e < (array.size - 1)
-        array[e] + array[0]
-      else
-        array[e] = array[e]
-      end
+p '5. Дан целочисленный массив. Преобразовать его, прибавив к четным числам первый элемент. Первый и последний элементы массива не изменять.'
+def sum_even_and_first_elements array
+  array.each_index.map do |i|
+    if i > 0 && i < array.size - 1 && array[i].even?
+      array[i] + array.first
     else
-      array[e] = array[e]
+      array[i]
     end
   end
 end
-p 'p arr(array)'
-p arr(array)
+p 'p sum_even_and_first_elements(array)'
+p sum_even_and_first_elements(array)
 p '--------------------------------------------------------'
 
 
-p 'Дан целочисленный массив. Заменить все положительные элементы на значение минимального.'
-def positive_to_min array
-  array.map do |e|
-    if e > 0
-      e = array.min
+p '6. Дан целочисленный массив. Преобразовать его, прибавив к четным числам последний элемент. Первый и последний элементы массива не изменять.'
+def sum_even_and_last_elements array
+  array.each_index.map do |i|
+    if i > 0 && i < array.size - 1 && array[i].even?
+      array[i] + array.last
     else
-      e = e
+      array[i]
     end
   end
 end
-p 'p positive_to_min(array)'
-p positive_to_min(array)
+p 'p sum_even_and_last_elements(array)'
+p sum_even_and_last_elements(array)
 p '--------------------------------------------------------'
 
 
-p 'Дан целочисленный массив. Осуществить циклический сдвиг элементов массива влево на одну позицию.'
+p '7. Дан целочисленный массив. Преобразовать его, прибавив к нечетным числам последний элемент. Первый и последний элементы массива не изменять.'
+def sum_odd_and_last_elements array
+  array.each_index.map do |i|
+    if i > 0 && i < array.size - 1 && array[i].odd?
+      array[i] + array.last
+    else
+      array[i]
+    end
+  end
+end
+p 'p sum_odd_and_last_elements(array)'
+p sum_odd_and_last_elements(array)
+p '--------------------------------------------------------'
+
+
+p '8. Дан целочисленный массив. Преобразовать его, прибавив к нечетным числам первый элемент. Первый и последний элементы массива не изменять.'
+p 'p [array[0]] + array[1...-1].map { |e| e.odd? ? e + array[0] : e } + [array[-1]]'
+p [array[0]] + array[1...-1].map { |e| e.odd? ? e + array[0] : e } + [array[-1]]
+p '--------------------------------------------------------'
+
+
+p '9. Дан целочисленный массив. Заменить все положительные элементы на значение минимального.'
+p 'p array.map { |e| e.positive? ? e = array.min : e }'
+p array.map { |e| e.positive? ? e = array.min : e }
+p '--------------------------------------------------------'
+
+
+p '10. Дан целочисленный массив. Заменить все положительные элементы на значение максимального.'
+p 'p array.map { |e| e.positive? ? e = array.max : e }'
+p array.map { |e| e.positive? ? e = array.max : e }
+p '--------------------------------------------------------'
+
+
+p '11. Дан целочисленный массив. Заменить все отрицательные элементы на значение минимального.'
+p 'p array.map { |e| e.negative? ? e = array.min : e }'
+p array.map { |e| e.negative? ? e = array.min : e }
+p '--------------------------------------------------------'
+
+
+p '12. Дан целочисленный массив. Заменить все отрицательные элементы на значение максимального.'
+p 'p array.map { |e| e.negative? ? e = array.max : e }'
+p array.map { |e| e.negative? ? e = array.max : e }
+p '--------------------------------------------------------'
+
+
+p '13. Дан целочисленный массив. Осуществить циклический сдвиг элементов массива влево на одну позицию.'
 p 'p array.rotate(1)'
 p array.rotate(1)
+p '--------------------------------------------------------'
+
+
+p '14. Дан целочисленный массив. Осуществить циклический сдвиг элементов массива вправо на одну позицию.'
 p 'p array.rotate(-1)'
 p array.rotate(-1)
 p '--------------------------------------------------------'
 
 
-p 'Дан целочисленный массив. Найти количество его локальных максимумов.'
+p '15. Дан целочисленный массив. Найти количество его локальных максимумов.'
 def local_max_count array
   array_new = array.each_index.select {|i| i>0 && i<array.size-1 && array[i]>array[i-1] && array[i]>array[i+1]}
   p array_new.size
@@ -72,178 +127,344 @@ local_max_count(array)
 p '--------------------------------------------------------'
 
 
-p 'Дано вещественное число R и массив вещественных чисел. Найти элемент массива, который наиболее близок к данному числу.'
+p '16. Дан целочисленный массив. Найти количество его локальных минимумов.'
+def local_min_count array
+  array_new = array.each_index.select do |i|
+    i>0 && i<array.size-1 && array[i]<array[i-1] && array[i]<array[i+1]
+  end
+  p array_new.size
+end
+p 'local_min_count(array)'
+local_min_count(array)
+p '--------------------------------------------------------'
+
+
+p '17. Дан целочисленный массив. Найти максимальный из его локальных максимумов.'
+def max_local_max array
+  array_new = array.each_index.select {|i| i>0 && i<array.size-1 && array[i]>array[i-1] && array[i]>array[i+1]}
+  p (array_new.map { |e| array[e] }).max
+end
+p 'max_local_max(array)'
+max_local_max(array)
+p '--------------------------------------------------------'
+
+
+p '18. Дан целочисленный массив. Найти минимальный из его локальных минимумов.'
+def min_local_min array
+  array_new = array.each_index.select {|i| i>0 && i<array.size-1 && array[i]<array[i-1] && array[i]<array[i+1]}
+  p (array_new.map { |e| array[e] }).min
+end
+p 'min_local_min(array)'
+min_local_min(array)
+p '--------------------------------------------------------'
+
+
+p '19. Дано вещественное число R и массив вещественных чисел. Найти элемент массива, который наиболее близок к данному числу.'
 array_float = [2.34, 7.34, 76.57, 45.8, 4.35, 2.93]
-num_R = 28.43
+r = 28.43
 def print_element_close_to_num (array, num)
   array_new = array.map {|e| (e-num).abs}
-  p array[array_new.index {|e| e == array_new.min}]
+  p array[array_new.index(array_new.min)]
 end
-p 'print_element_close_to_num(array_float, num_R)'
-print_element_close_to_num(array_float, num_R)
+p 'print_element_close_to_num(array_float, r)'
+print_element_close_to_num(array_float, r)
 p '--------------------------------------------------------'
 
 
-p 'Дан целочисленный массив. Преобразовать его, вставив перед каждым положительным элементом нулевой элемент.'
-def first_before_e array
-  array.map do |e|
-    if e > 0
-      e = (array[0].to_s + e.to_s).to_i
-    else
-      e = e
-    end
+p '20. Дано вещественное число R и массив вещественных чисел. Найти элемент массива, который наименее близок к данному числу.'
+array_float = [2.34, 7.34, 76.57, 45.8, 4.35, 2.93]
+r = 28.43
+def print_element_least_close_to_num (array, num)
+  array_new = array.map {|e| (e-num).abs}
+  p array[array_new.index(array_new.max)]
+end
+p 'print_element_least_close_to_num(array_float, r)'
+print_element_least_close_to_num(array_float, r)
+p '--------------------------------------------------------'
+
+
+p '21. Дан целочисленный массив. Преобразовать его, вставив перед каждым положительным элементом нулевой элемент.'
+def first_el_before_positive_el
+  p array = Array.new(10){ |i| rand(-10..10) }
+  array_new = array.each_index.find_all { |i| array[i] > 0 }
+  for e in array_new
+    array.insert(e + array_new.index(e), array[0])
   end
+  p array
 end
-p 'p first_before_e(array)'
-p first_before_e(array)
+p 'first_el_before_positive_el'
+first_el_before_positive_el
 p '--------------------------------------------------------'
 
 
-p 'Дан целочисленный массив. Упорядочить его по убыванию.'
-p 'p array.sort.reverse'
-p array.sort.reverse
+p '22. Дан целочисленный массив. Преобразовать его, вставив перед каждым отрицательным элементом нулевой элемент.'
+def first_el_before_negative_el
+  p array = Array.new(10){ |i| rand(-10..10) }
+  array_new = array.each_index.find_all { |i| array[i] < 0 }
+  for e in array_new
+    array.insert(e + array_new.index(e), array[0])
+  end
+  p array
+end
+p 'first_el_before_negative_el'
+first_el_before_negative_el
+# p 'array.map { |e| e > 0 ? e = (array[0].to_s + e.to_s).to_i : e }'
+# p array.map { |e| e < 0 ? e = (array[0].to_s + e.to_s).to_i : e }
 p '--------------------------------------------------------'
 
 
-p 'Дан целочисленный массив. Упорядочить его по возрастанию.'
+p '23. Дан целочисленный массив. Преобразовать его, вставив после каждого положительного элемента нулевой элемент.'
+def first_el_after_positive_el
+  p array = Array.new(10){ |i| rand(-10..10) }
+  array_new = array.each_index.find_all { |i| array[i] > 0 }
+  for e in array_new
+    array.insert(e + array_new.index(e) + 1, array[0])
+  end
+  p array
+end
+p 'first_el_after_positive_el'
+first_el_after_positive_el
+p '--------------------------------------------------------'
+
+
+p '24. Дан целочисленный массив. Преобразовать его, вставив после каждого отрицательного элемента нулевой элемент.'
+def first_el_after_negative_el
+  p array = Array.new(10){ |i| rand(-10..10) }
+  array_new = array.each_index.find_all { |i| array[i] < 0 }
+  for e in array_new
+    array.insert(e + array_new.index(e) + 1, array[0])
+  end
+  p array
+end
+p 'first_el_after_negative_el'
+first_el_after_negative_el
+p '--------------------------------------------------------'
+
+
+p '25. Дан целочисленный массив. Упорядочить его по возрастанию.'
 p 'p array.sort.reverse'
 p array.sort
 p '--------------------------------------------------------'
 
 
-p 'Дан целочисленный массив. Вывести индексы массива в том порядке, в котором соответствующие им элементы образуют убывающую последовательность.'
+p '26. Дан целочисленный массив. Упорядочить его по убыванию.'
+p 'p array.sort.reverse'
+p array.sort.reverse
+p '--------------------------------------------------------'
+
+
+p '27. Дан целочисленный массив. Вывести индексы массива в том порядке, в котором соответствующие им элементы образуют убывающую последовательность.'
 p 'p array.each_with_index.sort.reverse.map { |e, i| i }'
 p array.each_with_index.sort.reverse.map { |e, i| i }
 p '--------------------------------------------------------'
 
 
-p 'Дан целочисленный массив. Вывести индексы массива в том порядке, в котором соответствующие им элементы образуют возрастающую последовательность.'
+p '28. Дан целочисленный массив. Вывести индексы массива в том порядке, в котором соответствующие им элементы образуют возрастающую последовательность.'
 p 'p array.each_with_index.sort.map { |e, i| i }'
 p array.each_with_index.sort.map { |e, i| i }
 p '--------------------------------------------------------'
 
 
-p 'Дан целочисленный массив. Найти индексы минимального элемента.'
-p 'p array.each_index.select {|i| array[i] == array.min}'
-p array.each_index.select {|i| array[i] == array.min}
+p '29. Дан целочисленный массив. Найти индекс минимального элемента.'
+p 'p array.each_index.find { |i| array[i] == array.min }'
+p array.each_index.find { |i| array[i] == array.min }
 p '--------------------------------------------------------'
 
 
-p 'Дан целочисленный массив. Найти индекс первого минимального элемента.'
+p '30. Дан целочисленный массив. Найти индекс максимального элемента.'
+p 'p array.each_index.find { |i| array[i] == array.max }'
+p array.each_index.find { |i| array[i] == array.max }
+p '--------------------------------------------------------'
+
+
+p '31. Дан целочисленный массив. Найти индекс первого минимального элемента.'
 p 'p array.index(array.min)'
 p array.index(array.min)
 p '--------------------------------------------------------'
 
 
-p 'Дан целочисленный массив. Найти индекс последнего минимального элемента.'
+p '32. Дан целочисленный массив. Найти индекс первого максимального элемента.'
+p 'p array.index(array.max)'
+p array.index(array.max)
+p '--------------------------------------------------------'
+
+
+p '33. Дан целочисленный массив. Найти индекс последнего минимального элемента.'
 p 'p array.rindex(array.min)'
 p array.rindex(array.min)
 p '--------------------------------------------------------'
 
 
-p 'Дан целочисленный массив. Найти количество минимальных элементов.'
-p 'p array.each_index.select.count {|i| array[i] == array.min}'
-p array.each_index.select.count {|i| array[i] == array.min}
+p '34. Дан целочисленный массив. Найти индекс последнего максимального элемента.'
+p 'p array.rindex(array.max)'
+p array.rindex(array.max)
 p '--------------------------------------------------------'
 
 
-p 'Дан целочисленный массив. Найти минимальный четный элемент.'
-p 'p (array.select {|e| e.even?}).min'
-p (array.select {|e| e.even?}).min
+p '35. Дан целочисленный массив. Найти количество минимальных элементов.'
+p 'p array.select.count { |e| e == array.min }'
+p array.select.count { |e| e == array.min }
 p '--------------------------------------------------------'
 
 
-p 'Дан целочисленный массив и интервал a..b. Найти минимальный из элементов в этом интервале.'
+p '36. Дан целочисленный массив. Найти количество максимальных элементов.'
+p 'p array.select.count { |e| e == array.max }'
+p array.select.count { |e| e == array.max }
+p '--------------------------------------------------------'
+
+
+p '37. Дан целочисленный массив. Найти минимальный четный элемент.'
+p 'p (array.select { |e| e.even? }).min'
+p (array.select { |e| e.even? }).min
+p '--------------------------------------------------------'
+
+
+p '38. Дан целочисленный массив. Найти минимальный нечетный элемент.'
+p 'p (array.select { |e| e.odd? }).min'
+p (array.select { |e| e.odd? }).min
+p '--------------------------------------------------------'
+
+
+p '39. Дан целочисленный массив. Найти максимальный четный элемент.'
+p 'p (array.select { |e| e.even? }).max'
+p (array.select { |e| e.even? }).max
+p '--------------------------------------------------------'
+
+
+p '40. Дан целочисленный массив. Найти максимальный нечетный элемент.'
+p 'p (array.select { |e| e.odd? }).max'
+p (array.select { |e| e.odd? }).max
+p '--------------------------------------------------------'
+
+
+p '41. Дан целочисленный массив. Найти минимальный положительный элемент.'
+p 'p (array.select { |e| e > 0 }).min'
+p (array.select { |e| e > 0 }).min
+p '--------------------------------------------------------'
+
+
+p '42. Дан целочисленный массив. Найти максимальный отрицательный элемент.'
+p 'p (array.select { |e| e < 0 }).max'
+p (array.select { |e| e < 0 }).max
+p '--------------------------------------------------------'
+
+
+p '43. Дан целочисленный массив и интервал a..b. Найти минимальный из элементов в этом интервале.'
 interval = (2..6)
 p 'p array[interval].min'
 p array[interval].min
 p '--------------------------------------------------------'
 
 
-p 'Дан целочисленный массив. Найти количество элементов, расположенных перед первым минимальным.'
+p '44. Дан целочисленный массив и интервал a..b. Найти максимальный из элементов в этом интервале.'
+interval = (2..6)
+p 'p array[interval].max'
+p array[interval].max
+p '--------------------------------------------------------'
+
+p '45. Дан целочисленный массив. Найти количество элементов, расположенных перед первым минимальным.'
 p 'p array.index(array.min)'
 p array.index(array.min)
 p '--------------------------------------------------------'
 
 
-p 'Дан целочисленный массив. Найти количество элементов, расположенных после первого минимального.'
+p '46. Дан целочисленный массив. Найти количество элементов, расположенных перед первым максимальным.'
+p 'p array.index(array.max)'
+p array.index(array.max)
+p '--------------------------------------------------------'
+
+
+p '47. Дан целочисленный массив. Найти количество элементов, расположенных после первого максимального.'
+p 'p array.size - (array.index(array.max) + 1)'
+p array.size - (array.index(array.max) + 1)
+p '--------------------------------------------------------'
+
+
+p '48. Дан целочисленный массив. Найти количество элементов, расположенных после первого минимального.'
 p 'p array.size - (array.index(array.min) + 1)'
 p array.size - (array.index(array.min) + 1)
 p '--------------------------------------------------------'
 
 
-p 'Дан целочисленный массив. Найти индекс первого экстремального (то есть минимального или максимального) элемента.'
-p 'p array.each_index.find {|i| array[i] == array.min || array[i] == array.max}'
-p array.index.find {|i| array[i] == array.min || array[i] == array.max}
+p '49. Дан целочисленный массив. Найти количество элементов, расположенных перед последним максимальным.'
+p 'p array.rindex(array.max)'
+p array.rindex(array.max)
 p '--------------------------------------------------------'
 
 
-p 'Дан целочисленный массив. Найти индекс последнего экстремального (то есть минимального или максимального) элемента.'
-p 'p array.rindex(array.reverse.find {|e| e == array.min || e == array.max})'
-p array.rindex(array.reverse.find {|e| e == array.min || e == array.max})
+p '50. Дан целочисленный массив. Найти количество элементов, расположенных перед последним минимальным.'
+p 'p array.rindex(array.min)'
+p array.rindex(array.min)
 p '--------------------------------------------------------'
 
 
-p 'Дан целочисленный массив. Найти количество элементов, между первым и последним минимальным.'
+p '51. Дан целочисленный массив. Найти количество элементов, расположенных после последнего максимального.'
+p 'p array.size - (array.rindex(array.max) + 1)'
+p array.size - (array.rindex(array.max) + 1)
+p '--------------------------------------------------------'
+
+
+p '52. Дан целочисленный массив. Найти количество элементов, расположенных после последнего минимального.'
+p 'p array.size - (array.index(array.min) + 1)'
+p array.size - (array.rindex(array.min) + 1)
+p '--------------------------------------------------------'
+
+
+p '53. Дан целочисленный массив. Найти индекс первого экстремального (то есть минимального или максимального) элемента.'
+p 'p array.index(array.find { |e| e == array.min || e == array.max })'
+p array.index(array.find { |e| e == array.min || e == array.max })
+p '--------------------------------------------------------'
+
+
+p '54. Дан целочисленный массив. Найти индекс последнего экстремального (то есть минимального или максимального) элемента.'
+p 'p array.rindex(array.find { |e| e == array.min || e == array.max })'
+p array.rindex(array.find { |e| e == array.min || e == array.max })
+p '--------------------------------------------------------'
+
+
+p '55. Дан целочисленный массив. Найти количество элементов, между первым и последним минимальным.'
 p 'p array.rindex(array.min) - (array.index(array.min) + 1)'
 p array.rindex(array.min) - (array.index(array.min) + 1)
 p '--------------------------------------------------------'
 
 
-p 'Дан целочисленный массив. Найти два наибольших элемента.'
+p '56. Дан целочисленный массив. Найти количество элементов, между первым и последним максимальным.'
+p 'p array.rindex(array.max) - (array.index(array.max) + 1)'
+p array.rindex(array.max) - (array.index(array.max) + 1)
+p '--------------------------------------------------------'
+
+
+p '57. Дан целочисленный массив. Найти два наибольших элемента.'
 p 'p array.uniq.sort.reverse[0, 2]'
 p array.uniq.sort.reverse[0, 2]
 p '--------------------------------------------------------'
 
 
-p 'Дан целочисленный массив. Найти максимальное количество подряд идущих минимальных элементов.'
-# array = Array.new(9999) {rand(1..10)}
-def max_count_min_elements_in_a_row array
-  # array_new = array.each_index.select {|i| array[i] == array[i-1] || array[i] == array[i+1]}
-  a = nil  # индекс первого элемента в интервале одинаковых значений подряд
-  b = nil  # индекс последнего элемента в интервале одинаковых значений подряд
-  c = []   # массив размеров интервалов одинаковых значений подряд
-  array.each_index do |i|
-    if array[i] == array.min
-      if array[i+1] != nil
-        if array[i] == array[i+1]
-          if array[i] != array[i-1]
-            a = i
-          end
-        elsif a != nil
-          if array[i] == array[i-1] && array[i] != array[i+1]
-            b = i
-            c << (b - a + 1)
-          end
-        end
-      elsif array[i] == array[i-1] && array[i] != array[i+1]
-        b = i
-        c << (b - a + 1)
-      end
-    else
-      c << 1
-    end
-
-  end
-  p c.max
-end
-p 'max_count_min_elements_in_a_row array'
-max_count_min_elements_in_a_row array
-# ПЕРЕРОБИТЬ ПЕРЕРОБИТЬ ПЕРЕРОБИТЬ ПЕРЕРОБИТЬ ПЕРЕРОБИТЬ ПЕРЕРОБИТЬ ПЕРЕРОБИТЬ ПЕРЕРОБИТЬ ПЕРЕРОБИТЬ ПЕРЕРОБИТЬ ПЕРЕРОБИТЬ ПЕРЕРОБИТЬ ПЕРЕРОБИТЬ !!!!!!
+p '58. Дан целочисленный массив. Найти два наименьших элемента.'
+p 'p array.uniq.sort[0, 2]'
+p array.uniq.sort[0, 2]
 p '--------------------------------------------------------'
 
 
-p 'Дан целочисленный массив. Вывести вначале все его четные элементы, а затем - нечетные.'
-p 'p array.select {|e| e.even?}
-p array.select {|e| e.odd?}'
-p array.select {|e| e.even?}
+p '59. Дан целочисленный массив. Вывести вначале все его четные элементы, а затем - нечетные.'
+p 'p array.select { |e| e.even? }'
+p 'p array.select { |e| e.odd? }'
+p array.select { |e| e.even? }
+p array.select { |e| e.odd? }
+p '--------------------------------------------------------'
+
+
+p '60. Дан целочисленный массив. Вывести вначале все его нечетные элементы, а затем - четные.'
+p 'p array.select {|e| e.odd?}'
+p 'p array.select {|e| e.even?}'
 p array.select {|e| e.odd?}
+p array.select {|e| e.even?}
 p '--------------------------------------------------------'
 
 
 p 'Дан целочисленный массив. Проверить, чередуются ли в нем четные и нечетные числа.'
 array_rotate = [2,3,2,3,2,3,2,3,2,3,2]
-p array_rotate.each_index.find(-> {'chered'}) {|i| (array_rotate[i].even? && array_rotate[i+1] != nil && array_rotate[i+1].even?) || (array_rotate[i].odd? && array_rotate[i+1] != nil && array_rotate[i+1].odd?)}
+p array_rotate.each_index.find(-> {'rotate'}) {|i| (array_rotate[i].even? && array_rotate[i+1] != nil && array_rotate[i+1].even?)}
 p '--------------------------------------------------------'
 
 
@@ -415,6 +636,32 @@ p array.each_index.find_all {|e| array[e] < array[e-1]}
 p (array.each_index.find_all {|e| array[e] < array[e-1]}).size
 p '--------------------------------------------------------'
 
+
+
+# p 'Дан целочисленный массив. Найти максимальное количество подряд идущих минимальных элементов.'
+# array = [1, 2, 2, 1, 1, 2, 1, 2, 2, 3]
+# def max_count_min_elements_in_a_row array
+#   first_index_interval = nil  # индекс первого элемента в интервале одинаковых значений подряд
+#   last_index_interval = nil  # индекс последнего элемента в интервале одинаковых значений подряд
+#   array_sizes_intervals = []   # массив размеров интервалов одинаковых значений подряд
+#   array.each_index do |i|
+#    if array[i] == array.min
+#      if array[i] == array[i+1] && array[i] != array[i-1]
+#        first_index_interval = i
+#      elsif array[i] != array[i+1] && array[i] == array[i-1]
+#        last_index_interval = i
+#        array_sizes_intervals << (last_index_interval - first_index_interval + 1)
+#      elsif array[i] != array[i+1] && array[i] != array[i-1]
+#        array_sizes_intervals << 1
+#      end
+#    end
+#   end
+#   p array_sizes_intervals.size
+#   p array_sizes_intervals.max
+# end
+# p 'max_count_min_elements_in_a_row array'
+# max_count_min_elements_in_a_row array
+# p '--------------------------------------------------------'
 
 
 
