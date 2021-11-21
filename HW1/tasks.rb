@@ -276,14 +276,14 @@ p '--------------------------------------------------------'
 
 
 p '29. Дан целочисленный массив. Найти индекс минимального элемента.'
-p 'p array.each_index.find { |i| array[i] == array.min }'
-p array.each_index.find { |i| array[i] == array.min }
+p 'p array.index(array.min)'
+p array.index(array.min)
 p '--------------------------------------------------------'
 
 
 p '30. Дан целочисленный массив. Найти индекс максимального элемента.'
-p 'p array.each_index.find { |i| array[i] == array.max }'
-p array.each_index.find { |i| array[i] == array.max }
+p 'p array.index(array.max)'
+p array.index(array.max)
 p '--------------------------------------------------------'
 
 
@@ -313,13 +313,13 @@ p '--------------------------------------------------------'
 
 p '35. Дан целочисленный массив. Найти количество минимальных элементов.'
 p 'p array.select.count { |e| e == array.min }'
-p array.select.count { |e| e == array.min }
+p array.count { |e| e == array.min }
 p '--------------------------------------------------------'
 
 
 p '36. Дан целочисленный массив. Найти количество максимальных элементов.'
 p 'p array.select.count { |e| e == array.max }'
-p array.select.count { |e| e == array.max }
+p array.count { |e| e == array.max }
 p '--------------------------------------------------------'
 
 
@@ -567,34 +567,87 @@ sum_close_to_num(array_float, num_R)
 p '--------------------------------------------------------'
 
 
-# p 'Дан целочисленный массив. Удалить все элементы, встречающиеся менее двух раз.'
-# arr = [1,2,2,6,3,3,3,4,4,4,4,5,5,5,5,5,6,6,6,6,6]
-#
-# def delete_uniq_elements array
-#   for el in 0..array.length - 1
-#
-#     if (array.length - (array - [array[el]]).length) < 2
-#       array = array - [array[el]]
-#     end
-#   end
-#   p array
-# end
-# p '1) delete_uniq_elements (arr)'
-# delete_uniq_elements (arr)
-# p '2) arr.delete_if {|e| (arr.length - (arr - [arr[arr.index(e)]]).length) < 5}'
-# arr.delete_if {|e| (arr.length - (arr - [arr[arr.index(e)]]).length) > 5}
-# p arr
-# p '--------------------------------------------------------'
+p '65. Дан целочисленный массив. Удалить все элементы, встречающиеся менее двух раз.'
+def delete_elements_if_less_2
+  p array = [1,2,2,6,3,3,3,4,4,4,4,5,5,5,5,5,6,6,6,6,6]
+  for e in array.uniq
+    if array.count(e) < 2
+      array.delete(e)
+    end
+  end
+  p array
+end
+p 'delete_elements_if_less_2'
+delete_elements_if_less_2
+p '--------------------------------------------------------'
 
 
-# p 'Дан целочисленный массив. Найти среднее арифметическое модулей его элементов.'
-# p 'p (array.map {|e| e.abs}).sum / array.length.to_f'
-# p (array.map {|e| e.abs}).sum / array.length.to_f
-# p '--------------------------------------------------------'
+p '66. Дан целочисленный массив. Удалить все элементы, встречающиеся более двух раз.'
+def delete_elements_if_more_2
+  p array = [1,2,2,6,3,3,3,4,4,4,4,5,5,5,5,5,6,6,6,6,6]
+  for e in array.uniq
+    if array.count(e) > 2
+      array.delete(e)
+    end
+  end
+  p array
+end
+p 'delete_elements_if_more_2'
+delete_elements_if_more_2
+p '--------------------------------------------------------'
 
 
-# number = -38473
-# p 'Дано целое число. Найти сумму его цифр.'
+p '67. Дан целочисленный массив. Удалить все элементы, встречающиеся ровно два раза.'
+def delete_elements_if_equal_2
+  p array = [1,2,2,6,3,3,3,4,4,4,4,5,5,5,5,5,6,6,6,6,6]
+  for e in array.uniq
+    if array.count(e) == 2
+      array.delete(e)
+    end
+  end
+  p array
+end
+p 'delete_elements_if_equal_2'
+delete_elements_if_equal_2
+p '--------------------------------------------------------'
+
+
+p '68. Дан целочисленный массив. Удалить все элементы, встречающиеся ровно три раза.'
+def delete_elements_if_equal_3
+  p array = [1,2,2,6,3,3,3,4,4,4,4,5,5,5,5,5,6,6,6,6,6]
+  for e in array.uniq
+    if array.count(e) == 3
+      array.delete(e)
+    end
+  end
+  p array
+end
+p 'delete_elements_if_equal_3'
+delete_elements_if_equal_3
+p '--------------------------------------------------------'
+
+
+p '69. Дан целочисленный массив. Найти среднее арифметическое модулей его элементов.'
+p 'p array.map { |e| e.abs }.sum.to_f / array.length'
+p array.map { |e| e.abs }.sum.to_f / array.length
+p '--------------------------------------------------------'
+
+
+p '70. Дан целочисленный массив. Найти среднее арифметическое квадратов его элементов.'
+p 'p array.map { |e| e**2 }.sum.to_f / array.length'
+p array.map { |e| e**2 }.sum.to_f / array.length
+p '--------------------------------------------------------'
+
+
+p '71. Дано целое число. Найти сумму его цифр.'
+number = 38473
+def sum num
+  array = Array.new
+  num.to_s.each_char { |e| array << e }
+  p array.map { |e| e.to_i }.sum
+end
+sum number
+
 # def print_sum_of_numeral_in_number (number)
 #   arr = Array.new()
 #   num = number.abs
@@ -605,13 +658,12 @@ p '--------------------------------------------------------'
 #     else
 #       num = num / 10
 #     end
-#
 #   end
 #   p arr.sum
 # end
 # p 'print_sum_of_numeral_in_number(number)'
 # print_sum_of_numeral_in_number(number)
-# p '--------------------------------------------------------'
+p '--------------------------------------------------------'
 
 
 # p 'Дан целочисленный массив. Возвести в квадрат отрицательные элементы и в третью степень - положительные. Нулевые элементы - не изменять.'
