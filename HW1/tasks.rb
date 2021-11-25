@@ -8,70 +8,39 @@ p (array.each_index.map { |i| array[i] if i.odd? }).compact
 p '--------------------------------------------------------'
 
 p '2. Дан целочисленный массив. Необходимо вывести вначале его элементы с нечетными индексами, а затем - четными.'
-p 'p array_odd'
-p 'p array_even'
-array_odd = Array.new
-array_even = Array.new
-array.each_with_index { |e,i| array_odd << e if i.odd? }
-array.each_with_index { |e,i| array_even << e if i.even? }
-p array_odd
-p array_even
+p 'p array.select.with_index { |e,i| e if i.odd? }'
+p 'p array.select.with_index { |e,i| e if i.even? }'
+p array.select.with_index { |e,i| e if i.odd? }
+p array.select.with_index { |e,i| e if i.even? }
 p '--------------------------------------------------------'
 
 p '3. Дан целочисленный массив. Вывести номер первого из тех его элементов, которые удовлетворяют двойному неравенству: A[0] < A[i] < A[-1]. Если таких элементов нет, то вывести [ ].'
-p 'p array.index(array.find { |e| array[0] < e && e < array[-1] })'
-p array.index(array.find { |e| array[0] < e && e < array[-1] })
+p 'p array.index { |e| array[0] < e && e < array[-1] } || []'
+p array.index { |e| array[0] < e && e < array[-1] } || []
 p '--------------------------------------------------------'
 
 
 p '4. Дан целочисленный массив. Вывести номер последнего из тех его элементов, которые удовлетворяют двойному неравенству: A[0] < A[i] < A[-1]. Если таких элементов нет, то вывести [ ].'
-p 'p array.rindex(array.reverse.find { |e| array[0] < e && e < array[-1] })'
-p array.rindex(array.reverse.find { |e| array[0] < e && e < array[-1] })
+p 'p array.rindex { |e| array[0] < e && e < array[-1] } || []'
+p array.rindex { |e| array[0] < e && e < array[-1] } || []
 p '--------------------------------------------------------'
 
 
 p '5. Дан целочисленный массив. Преобразовать его, прибавив к четным числам первый элемент. Первый и последний элементы массива не изменять.'
-def sum_even_and_first_elements array
-  array.each_index.map do |i|
-    if i > 0 && i < array.size - 1 && array[i].even?
-      array[i] + array.first
-    else
-      array[i]
-    end
-  end
-end
-p 'p sum_even_and_first_elements(array)'
-p sum_even_and_first_elements(array)
+p ' array.map.with_index { |e,i| i != 0 && i != (-1) && e.even? ? e + array[0] : e }'
+p array.map.with_index { |e,i| i != 0 && i != (-1) && e.even? ? e + array[0] : e }
 p '--------------------------------------------------------'
 
 
 p '6. Дан целочисленный массив. Преобразовать его, прибавив к четным числам последний элемент. Первый и последний элементы массива не изменять.'
-def sum_even_and_last_elements array
-  array.each_index.map do |i|
-    if i > 0 && i < array.size - 1 && array[i].even?
-      array[i] + array.last
-    else
-      array[i]
-    end
-  end
-end
-p 'p sum_even_and_last_elements(array)'
-p sum_even_and_last_elements(array)
+p 'p array.map.with_index { |e,i| i != 0 && i != (-1) && e.even? ? e + array[-1] : e }'
+p array.map.with_index { |e,i| i != 0 && i != (-1) && e.even? ? e + array[-1] : e }
 p '--------------------------------------------------------'
 
 
 p '7. Дан целочисленный массив. Преобразовать его, прибавив к нечетным числам последний элемент. Первый и последний элементы массива не изменять.'
-def sum_odd_and_last_elements array
-  array.each_index.map do |i|
-    if i > 0 && i < array.size - 1 && array[i].odd?
-      array[i] + array.last
-    else
-      array[i]
-    end
-  end
-end
-p 'p sum_odd_and_last_elements(array)'
-p sum_odd_and_last_elements(array)
+p 'p array.map.with_index { |e,i| i != 0 && i != (-1) && e.odd? ? e + array[-1] : e }'
+p array.map.with_index { |e,i| i != 0 && i != (-1) && e.odd? ? e + array[-1] : e }
 p '--------------------------------------------------------'
 
 
@@ -118,14 +87,16 @@ p '--------------------------------------------------------'
 
 
 p '15. Дан целочисленный массив. Найти количество его локальных максимумов.'
-def local_max_amount array
-  array_new = array.each_index.select do |i|
-    i > 0 && i < array.size-1 && array[i] > array[i-1] && array[i] > array[i+1]
-  end
-  p array_new.size
-end
-p 'local_max_amount(array)'
-local_max_amount(array)
+p array.each_index.select { |i| i > 0 && i < array.size-1 && array[i] > array[i-1] && array[i] > array[i+1] }.count
+
+# def local_max_amount array
+#   array_new = array.each_index.select do |i|
+#     i > 0 && i < array.size-1 && array[i] > array[i-1] && array[i] > array[i+1]
+#   end
+#   p array_new.size
+# end
+# p 'local_max_amount(array)'
+# local_max_amount(array)
 p '--------------------------------------------------------'
 
 
