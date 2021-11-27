@@ -45,11 +45,19 @@ p ('a'..'z').to_a.select.with_index { |e, i| e if array.include?(i + 1) }
 p '--------------------------------------------------------'
 
 p '– поменять местами минимальный и максимальный элементы массива;'
-p array.map { |e| e == array.min ? array.max : e == array.max ? array.min : e }
+p array.map { |e|
+  if e == array.min
+    array.max
+  elsif e == array.max
+    array.min
+  else
+    e
+  end
+}
 p '--------------------------------------------------------'
 
 p '– найти элементы, которые находятся перед минимальным числом в массиве;'
-p array.select.with_index { |e, i| e if i < array.index(array.min) }
+p array.select.with_index { |e, i| i < array.index(array.min) }
 p '--------------------------------------------------------'
 
 p '– необходимо найти три наименьших элемента.'
