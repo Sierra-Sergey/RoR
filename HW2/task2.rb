@@ -53,14 +53,14 @@ class Pet
 
   def help
     p 'Список возможных команд:'
-    p 'feed'
-    p 'sleep'
-    p 'play'
-    p 'toilet'
-    p 'bath'
-    p 'info'
-    p 'exit'
-    p 'help'
+    p 'feed --- покормить'
+    p 'sleep --- уложить спать'
+    p 'play --- поиграть'
+    p 'toilet --- сводить в туалет'
+    p 'bath --- покупать'
+    p 'info --- получить информацию о показателях питомца'
+    p 'exit --- выйти с программы'
+    p 'help --- получить список возможных команд'
   end
 
   def info
