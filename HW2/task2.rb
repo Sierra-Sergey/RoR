@@ -173,7 +173,6 @@ end
 
 pet = Pet.new(animals.sample, name)
 pet.help
-
 command = nil
 until command == 'exit'
   command = gets.chomp
