@@ -1,8 +1,9 @@
-require './CreateHtml.rb'
+require 'CreateHtml'
 class Pet
   include CreateHtml
   attr_accessor :animal, :name, :health, :bellyful, :peppiness,
-  :mood, :purity, :toilet, :asleep, :response, :emoji, :stats
+                :mood, :purity, :toilet, :asleep, :response, :emoji, :stats
+
   def initialize(animal, name)
     @animal = animal
     @name = name
@@ -16,7 +17,7 @@ class Pet
     @emoji = '&#128515;'
     @stats = [@health, @bellyful, @peppiness, @mood, @purity, @toilet]
 
-    @response = Array.new
+    @response = []
     puts "У Вас появился #{@animal} #{@name}"
   end
 
@@ -102,7 +103,7 @@ class Pet
         @response << (p 'От усталости Ваш питомец уснул на ходу и упал ударившись головой об пол')
         # if @health <= 0
         #   @response << (p 'Ваш питомец умер от полученых травм')
-          # exit
+        # exit
         # end
         @mood -= 10
       elsif @peppiness <= 30
@@ -158,24 +159,25 @@ class Pet
       if rand(0..2).positive?
         @mood = 30
         @response << (p '...Но вернулся, спустя несколько часов')
-      # else
-      #   @response << (p '...навсегда')
-      #   # exit
+        # else
+        #   @response << (p '...навсегда')
+        #   # exit
       end
     end
     @stats = [@health, @bellyful, @peppiness, @mood, @purity, @toilet]
 
-    if @stats.any? { |e| e <= 0 }
-      @emoji = '&#128546;'
-    elsif @stats.any? { |e| e < 30 }
-      @emoji = '&#128532;'
-    elsif @stats.any? { |e| e < 50 }
-      @emoji = '&#128528;'
-    else
-      @emoji = '&#128515;'
-    end
+    @emoji = if @stats.any? { |e| e <= 0 }
+               '&#128546;'
+             elsif @stats.any? { |e| e < 30 }
+               '&#128532;'
+             elsif @stats.any? { |e| e < 50 }
+               '&#128528;'
+             else
+               '&#128515;'
+             end
 
     return unless @health <= 0
+
     @emoji = '☠'
     @health = 0 if @health < 0
     @response.clear << (p 'Ваш питомец умер')

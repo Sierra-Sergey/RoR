@@ -1,4 +1,4 @@
-require './pet.rb'
+require './pet'
 
 class Game
   def create_pet
@@ -35,9 +35,7 @@ class Game
       @pet.html
       @pet.response.clear
 
-      if @pet.health <= 0
-        exit
-      end
+      exit if @pet.health <= 0
     end
   end
 end
