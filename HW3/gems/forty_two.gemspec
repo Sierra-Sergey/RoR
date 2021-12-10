@@ -9,4 +9,7 @@ Gem::Specification.new do |s|
   s.homepage    =
     ''
   s.license = 'MIT'
+  s.metadata = {
+    'rubygems_mfa_required' => 'true'
+  }
 end

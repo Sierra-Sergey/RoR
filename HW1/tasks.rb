@@ -46,22 +46,22 @@ p '--------------------------------------------------------'
 
 p '9. Дан целочисленный массив. Заменить все положительные элементы на значение минимального.'
 p 'p array.map { |e| e.positive? ? e = array.min : e }'
-p array.map { |e| e.positive? ? e = array.min : e }
+p array.map { |e| e.positive? ? array.min : e }
 p '--------------------------------------------------------'
 
 p '10. Дан целочисленный массив. Заменить все положительные элементы на значение максимального.'
 p 'p array.map { |e| e.positive? ? e = array.max : e }'
-p array.map { |e| e.positive? ? e = array.max : e }
+p array.map { |e| e.positive? ? array.max : e }
 p '--------------------------------------------------------'
 
 p '11. Дан целочисленный массив. Заменить все отрицательные элементы на значение минимального.'
 p 'p array.map { |e| e.negative? ? e = array.min : e }'
-p array.map { |e| e.negative? ? e = array.min : e }
+p array.map { |e| e.negative? ? array.min : e }
 p '--------------------------------------------------------'
 
 p '12. Дан целочисленный массив. Заменить все отрицательные элементы на значение максимального.'
 p 'p array.map { |e| e.negative? ? e = array.max : e }'
-p array.map { |e| e.negative? ? e = array.max : e }
+p array.map { |e| e.negative? ? array.max : e }
 p '--------------------------------------------------------'
 
 p '13. Дан целочисленный массив. Осуществить циклический сдвиг элементов массива влево на одну позицию.'
@@ -75,8 +75,11 @@ p array.rotate(-1)
 p '--------------------------------------------------------'
 
 p '15. Дан целочисленный массив. Найти количество его локальных максимумов.'
-p array.each_index.select { |i|
+p 'p array.each_index.select { |i|
   i > 0 && i < array.size - 1 && array[i] > array[i - 1] && array[i] > array[i + 1]
+}.count'
+p array.each_index.select { |i|
+  i.positive? && i < array.size - 1 && array[i] > array[i - 1] && array[i] > array[i + 1]
 }.count
 
 # def local_max_amount array
@@ -92,7 +95,7 @@ p '--------------------------------------------------------'
 p '16. Дан целочисленный массив. Найти количество его локальных минимумов.'
 def local_min_amount(array)
   array_new = array.each_index.select do |i|
-    i > 0 && i < array.size - 1 && array[i] < array[i - 1] && array[i] < array[i + 1]
+    i.positive? && i < array.size - 1 && array[i] < array[i - 1] && array[i] < array[i + 1]
   end
   p array_new.size
 end
@@ -126,30 +129,30 @@ p '--------------------------------------------------------'
 
 p '19. Дано вещественное число R и массив вещественных чисел. Найти элемент массива, который наиболее близок к данному числу.'
 array_float = [2.34, 7.34, 76.57, 45.8, 4.35, 2.93]
-num_R = 28.43
+num_r = 28.43
 def print_element_closest_to_num(array, num)
   array_new = array.map { |e| (e - num).abs }
   p array[array_new.index(array_new.min)]
 end
 p 'print_element_closest_to_num(array_float, num_R)'
-print_element_closest_to_num(array_float, num_R)
+print_element_closest_to_num(array_float, num_r)
 p '--------------------------------------------------------'
 
 p '20. Дано вещественное число R и массив вещественных чисел. Найти элемент массива, который наименее близок к данному числу.'
 array_float = [2.34, 7.34, 76.57, 45.8, 4.35, 2.93]
-num_R = 28.43
+num_r = 28.43
 def print_element_least_close_to_num(array, num)
   array_new = array.map { |e| (e - num).abs }
   p array[array_new.index(array_new.max)]
 end
 p 'print_element_least_close_to_num(array_float, num_R)'
-print_element_least_close_to_num(array_float, num_R)
+print_element_least_close_to_num(array_float, num_r)
 p '--------------------------------------------------------'
 
 p '21. Дан целочисленный массив. Преобразовать его, вставив перед каждым положительным элементом нулевой элемент.'
 def first_el_before_positive_el
   p array = Array.new(10) { |_i| rand(-10..10) }
-  array_new = array.each_index.find_all { |i| array[i] > 0 }
+  array_new = array.each_index.find_all { |i| array[i].positive? }
   array_new.reverse.each do |e|
     array.insert(e, array[0])
   end
@@ -162,7 +165,7 @@ p '--------------------------------------------------------'
 p '22. Дан целочисленный массив. Преобразовать его, вставив перед каждым отрицательным элементом нулевой элемент.'
 def first_el_before_negative_el
   p array = Array.new(10) { |_i| rand(-10..10) }
-  array_new = array.each_index.find_all { |i| array[i] < 0 }
+  array_new = array.each_index.find_all { |i| array[i].negative? }
   array_new.each do |e|
     array.insert(e + array_new.index(e), array[0])
   end
@@ -175,7 +178,7 @@ p '--------------------------------------------------------'
 p '23. Дан целочисленный массив. Преобразовать его, вставив после каждого положительного элемента нулевой элемент.'
 def first_el_after_positive_el
   p array = Array.new(10) { |_i| rand(-10..10) }
-  array_new = array.each_index.find_all { |i| array[i] > 0 }
+  array_new = array.each_index.find_all { |i| array[i].positive? }
   array_new.reverse.each do |e|
     array.insert(e + 1, array[0])
   end
@@ -188,7 +191,7 @@ p '--------------------------------------------------------'
 p '24. Дан целочисленный массив. Преобразовать его, вставив после каждого отрицательного элемента нулевой элемент.'
 def first_el_after_negative_el
   p array = Array.new(10) { |_i| rand(-10..10) }
-  array_new = array.each_index.find_all { |i| array[i] < 0 }
+  array_new = array.each_index.find_all { |i| array[i].negative? }
   array_new.reverse.each do |e|
     array.insert(e + 1, array[0])
   end
@@ -260,42 +263,42 @@ p '--------------------------------------------------------'
 
 p '37. Дан целочисленный массив. Найти минимальный четный элемент.'
 p 'p array.select { |e| e.even? }.min'
-p array.select { |e| e.even? }.min
+p array.select(&:even?).min
 p '--------------------------------------------------------'
 
 p '38. Дан целочисленный массив. Найти минимальный нечетный элемент.'
 p 'p array.select { |e| e.odd? }.min'
-p array.select { |e| e.odd? }.min
+p array.select(&:odd?).min
 p '--------------------------------------------------------'
 
 p '39. Дан целочисленный массив. Найти максимальный четный элемент.'
 p 'p array.select { |e| e.even? }.max'
-p array.select { |e| e.even? }.max
+p array.select(&:even?).max
 p '--------------------------------------------------------'
 
 p '40. Дан целочисленный массив. Найти максимальный нечетный элемент.'
 p 'p array.select { |e| e.odd? }.max'
-p array.select { |e| e.odd? }.max
+p array.select(&:odd?).max
 p '--------------------------------------------------------'
 
 p '41. Дан целочисленный массив. Найти минимальный положительный элемент.'
 p 'p array.select { |e| e > 0 }.min'
-p array.select { |e| e > 0 }.min
+p array.select(&:positive?).min
 p '--------------------------------------------------------'
 
 p '42. Дан целочисленный массив. Найти максимальный отрицательный элемент.'
 p 'p array.select { |e| e < 0 }.max'
-p array.select { |e| e < 0 }.max
+p array.select(&:negative?).max
 p '--------------------------------------------------------'
 
 p '43. Дан целочисленный массив и интервал a..b. Найти минимальный из элементов в этом интервале.'
-interval = 2..6
+interval = (2..6)
 p 'p array[interval].min'
 p array[interval].min
 p '--------------------------------------------------------'
 
 p '44. Дан целочисленный массив и интервал a..b. Найти максимальный из элементов в этом интервале.'
-interval = 2..6
+interval = (2..6)
 p 'p array[interval].max'
 p array[interval].max
 p '--------------------------------------------------------'
@@ -311,9 +314,9 @@ p array.index(array.max)
 p '--------------------------------------------------------'
 
 p '47. Дан целочисленный массив. Найти количество элементов, расположенных после первого максимального.'
-p 'p array[array.index(array.max)..array.size-2].size'
-p array[array.index(array.max)..array.size - 2].size
-# p array.size - (array.index(array.max) + 1)
+p 'p array.size - (array.index(array.max) + 1)'
+# p array[array.index(array.max)..array.size - 2].size
+p array.size - (array.index(array.max) + 1)
 p '--------------------------------------------------------'
 
 p '48. Дан целочисленный массив. Найти количество элементов, расположенных после первого минимального.'
@@ -374,15 +377,15 @@ p '--------------------------------------------------------'
 p '59. Дан целочисленный массив. Вывести вначале все его четные элементы, а затем - нечетные.'
 p 'p array.select { |e| e.even? }'
 p 'p array.select { |e| e.odd? }'
-p array.select { |e| e.even? }
-p array.select { |e| e.odd? }
+p array.select(&:even?)
+p array.select(&:odd?)
 p '--------------------------------------------------------'
 
 p '60. Дан целочисленный массив. Вывести вначале все его нечетные элементы, а затем - четные.'
 p 'p array.select {|e| e.odd?}'
 p 'p array.select {|e| e.even?}'
-p array.select { |e| e.odd? }
-p array.select { |e| e.even? }
+p array.select(&:odd?)
+p array.select(&:even?)
 p '--------------------------------------------------------'
 
 p '61. Дан целочисленный массив. Проверить, чередуются ли в нем четные и нечетные числа.'
@@ -391,10 +394,7 @@ def check_rotate_even_odd(array)
   bool = true
   (0..array.length - 2).each do |e|
     bool = array[e].even?
-    if array[e + 1].even? == bool
-      p 'not rotate'
-      return
-    end
+    return (p 'not rotate') if array[e + 1].even? == bool
   end
   p 'rotate'
 end
@@ -408,10 +408,7 @@ def check_rotate_positive_negative(array)
   bool = true
   (0..array.length - 2).each do |e|
     bool = array[e].positive?
-    if array[e + 1].positive? == bool
-      p 'not rotate'
-      return
-    end
+    return (p 'not rotate') if array[e + 1].positive? == bool
   end
   p 'rotate'
 end
@@ -421,7 +418,7 @@ p '--------------------------------------------------------'
 
 p '63. Дано вещественное число R и массив вещественных чисел. Найти два элемента массива, сумма которых наиболее близка к данному числу.'
 array_float = [2.34, 7.34, 76.57, 45.8, 4.35, 2.93]
-num_R = 28.43
+num_r = 28.43
 def sum_close_to_num(array, num)
   e1 = array[0]
   e2 = array[1]
@@ -443,14 +440,14 @@ def sum_close_to_num(array, num)
   p e1
   p e2
 end
-p 'sum_close_to_num(array_float, num_R)'
-sum_close_to_num(array_float, num_R)
+p 'sum_close_to_num(array_float, num_r)'
+sum_close_to_num(array_float, num_r)
 p '--------------------------------------------------------'
 
 p '64. Дано вещественное число R и массив вещественных чисел. Найти два элемента массива, сумма которых наименее близка к данному числу.'
 array_float = [2.34, 7.34, 76.57, 45.8, 14.35, 12.93]
-num_R = 28.43
-def sum_close_to_num(array, num)
+num_r = 28.43
+def sum_far_to_num(array, num)
   e1 = array[0]
   e2 = array[1]
   sum = (e1 + e2).abs
@@ -471,61 +468,34 @@ def sum_close_to_num(array, num)
   p e1
   p e2
 end
-p 'sum_close_to_num(array_float, num_R)'
-sum_close_to_num(array_float, num_R)
+p 'sum_far_to_num(array_float, num_r)'
+sum_far_to_num(array_float, num_r)
 p '--------------------------------------------------------'
 
 p '65. Дан целочисленный массив. Удалить все элементы, встречающиеся менее двух раз.'
-def delete_elements_if_less_2
-  p array = [1, 2, 2, 6, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6]
-  array.uniq.each do |e|
-    array.delete(e) if array.count(e) < 2
-  end
-  p array
-end
-p 'delete_elements_if_less_2'
-delete_elements_if_less_2
+p array_r = [1, 2, 2, 6, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6]
+p 'p array_r.reject { |e| array_r.count(e) < 2 }'
+p array_r.reject { |e| array_r.count(e) < 2 }
 p '--------------------------------------------------------'
 
 p '66. Дан целочисленный массив. Удалить все элементы, встречающиеся более двух раз.'
-def delete_elements_if_more_2
-  p array = [1, 2, 2, 6, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6]
-  array.uniq.each do |e|
-    array.delete(e) if array.count(e) > 2
-  end
-  p array
-end
-p 'delete_elements_if_more_2'
-delete_elements_if_more_2
+p 'p array_r.reject { |e| array_r.count(e) > 2 }'
+p array_r.reject { |e| array_r.count(e) > 2 }
 p '--------------------------------------------------------'
 
 p '67. Дан целочисленный массив. Удалить все элементы, встречающиеся ровно два раза.'
-def delete_elements_if_equal_2
-  p array = [1, 2, 2, 6, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6]
-  array.uniq.each do |e|
-    array.delete(e) if array.count(e) == 2
-  end
-  p array
-end
-p 'delete_elements_if_equal_2'
-delete_elements_if_equal_2
+p 'p array_r.reject { |e| array_r.count(e) == 2 }'
+p array_r.reject { |e| array_r.count(e) == 2 }
 p '--------------------------------------------------------'
 
 p '68. Дан целочисленный массив. Удалить все элементы, встречающиеся ровно три раза.'
-def delete_elements_if_equal_3
-  p array = [1, 2, 2, 6, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6]
-  array.uniq.each do |e|
-    array.delete(e) if array.count(e) == 3
-  end
-  p array
-end
-p 'delete_elements_if_equal_3'
-delete_elements_if_equal_3
+p 'p array_r.reject { |e| array_r.count(e) == 3 }'
+p array_r.reject { |e| array_r.count(e) == 3 }
 p '--------------------------------------------------------'
 
 p '69. Дан целочисленный массив. Найти среднее арифметическое модулей его элементов.'
 p 'p array.map { |e| e.abs }.sum.to_f / array.length'
-p array.map { |e| e.abs }.sum.to_f / array.length
+p array.map(&:abs).sum.to_f / array.length
 p '--------------------------------------------------------'
 
 p '70. Дан целочисленный массив. Найти среднее арифметическое квадратов его элементов.'
@@ -538,25 +508,10 @@ number = 38_473
 def sum(num)
   array = []
   num.to_s.each_char { |e| array << e }
-  p array.map { |e| e.to_i }.sum
+  p array.map(&:to_i).sum
 end
+p 'sum number'
 sum number
-
-# def print_sum_of_numeral_in_number (number)
-#   arr = Array.new()
-#   num = number.abs
-#   while num != 0
-#     if num % 10 != 0
-#       arr << num % 10
-#       num = (num - num % 10) / 10
-#     else
-#       num = num / 10
-#     end
-#   end
-#   p arr.sum
-# end
-# p 'print_sum_of_numeral_in_number(number)'
-# print_sum_of_numeral_in_number(number)
 p '--------------------------------------------------------'
 
 # p 'Дан целочисленный массив. Возвести в квадрат отрицательные элементы и в третью степень - положительные. Нулевые элементы - не изменять.'
