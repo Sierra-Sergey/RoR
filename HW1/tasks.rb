@@ -30,7 +30,7 @@ p array.map.with_index { |e, i| i != 0 && i != (-1) && e.even? ? e + array[0] : 
 p '--------------------------------------------------------'
 
 p '6. Дан целочисленный массив. Преобразовать его, прибавив к четным числам последний элемент. Первый и последний элементы массива не изменять.'
-p 'p array.map.with_index { |e,i| i != 0 && i != (-1) && e.even? ? e + array[-1] : e }'
+p 'p array.map.with_index { |e, i| i != 0 && i != (-1) && e.even? ? e + array[-1] : e }'
 p array.map.with_index { |e, i| i != 0 && i != (-1) && e.even? ? e + array[-1] : e }
 p '--------------------------------------------------------'
 
@@ -252,13 +252,13 @@ p array.rindex(array.max)
 p '--------------------------------------------------------'
 
 p '35. Дан целочисленный массив. Найти количество минимальных элементов.'
-p 'p array.select.count { |e| e == array.min }'
-p array.count { |e| e == array.min }
+p 'p array.count(array.min)'
+p array.count(array.min)
 p '--------------------------------------------------------'
 
 p '36. Дан целочисленный массив. Найти количество максимальных элементов.'
-p 'p array.select.count { |e| e == array.max }'
-p array.count { |e| e == array.max }
+p 'p array.count(array.max)'
+p array.count(array.max)
 p '--------------------------------------------------------'
 
 p '37. Дан целочисленный массив. Найти минимальный четный элемент.'
@@ -267,40 +267,40 @@ p array.select(&:even?).min
 p '--------------------------------------------------------'
 
 p '38. Дан целочисленный массив. Найти минимальный нечетный элемент.'
-p 'p array.select { |e| e.odd? }.min'
+p 'p array.select(&:odd?).min'
 p array.select(&:odd?).min
 p '--------------------------------------------------------'
 
 p '39. Дан целочисленный массив. Найти максимальный четный элемент.'
-p 'p array.select { |e| e.even? }.max'
+p 'p array.select(&:even?).max'
 p array.select(&:even?).max
 p '--------------------------------------------------------'
 
 p '40. Дан целочисленный массив. Найти максимальный нечетный элемент.'
-p 'p array.select { |e| e.odd? }.max'
+p 'p array.select(&:odd?).max'
 p array.select(&:odd?).max
 p '--------------------------------------------------------'
 
 p '41. Дан целочисленный массив. Найти минимальный положительный элемент.'
-p 'p array.select { |e| e > 0 }.min'
+p 'p array.select(&:positive?).min'
 p array.select(&:positive?).min
 p '--------------------------------------------------------'
 
 p '42. Дан целочисленный массив. Найти максимальный отрицательный элемент.'
-p 'p array.select { |e| e < 0 }.max'
+p 'p array.select(&:negative?).max'
 p array.select(&:negative?).max
 p '--------------------------------------------------------'
 
 p '43. Дан целочисленный массив и интервал a..b. Найти минимальный из элементов в этом интервале.'
 interval = (2..6)
-p 'p array[interval].min'
-p array[interval].min
+p 'p array.select { |e| interval.include?(e) }.min'
+p array.select { |e| interval.include?(e) }.min
 p '--------------------------------------------------------'
 
 p '44. Дан целочисленный массив и интервал a..b. Найти максимальный из элементов в этом интервале.'
 interval = (2..6)
-p 'p array[interval].max'
-p array[interval].max
+p 'p array.select { |e| interval.include?(e) }.max'
+p array.select { |e| interval.include?(e) }.max
 p '--------------------------------------------------------'
 
 p '45. Дан целочисленный массив. Найти количество элементов, расположенных перед первым минимальным.'
@@ -350,8 +350,8 @@ p array.index(array.find { |e| e == array.min || e == array.max })
 p '--------------------------------------------------------'
 
 p '54. Дан целочисленный массив. Найти индекс последнего экстремального (то есть минимального или максимального) элемента.'
-p 'p array.rindex(array.find { |e| e == array.min || e == array.max })'
-p array.rindex(array.find { |e| e == array.min || e == array.max })
+p 'p array.rindex(array.reverse.find { |e| e == array.min || e == array.max })'
+p array.rindex(array.reverse.find { |e| e == array.min || e == array.max })
 p '--------------------------------------------------------'
 
 p '55. Дан целочисленный массив. Найти количество элементов, между первым и последним минимальным.'
@@ -365,25 +365,25 @@ p array.rindex(array.max) - (array.index(array.max) + 1)
 p '--------------------------------------------------------'
 
 p '57. Дан целочисленный массив. Найти два наибольших элемента.'
-p 'p array.uniq.sort.reverse[0, 2]'
-p array.uniq.sort.reverse[0, 2]
+p 'p array.max(2)'
+p array.max(2)
 p '--------------------------------------------------------'
 
 p '58. Дан целочисленный массив. Найти два наименьших элемента.'
-p 'p array.uniq.sort[0, 2]'
-p array.uniq.sort[0, 2]
+p 'p array.min(2)'
+p array.min(2)
 p '--------------------------------------------------------'
 
 p '59. Дан целочисленный массив. Вывести вначале все его четные элементы, а затем - нечетные.'
-p 'p array.select { |e| e.even? }'
-p 'p array.select { |e| e.odd? }'
+p 'p array.select(&:even?)'
+p 'p array.select(&:odd?)'
 p array.select(&:even?)
 p array.select(&:odd?)
 p '--------------------------------------------------------'
 
 p '60. Дан целочисленный массив. Вывести вначале все его нечетные элементы, а затем - четные.'
-p 'p array.select {|e| e.odd?}'
-p 'p array.select {|e| e.even?}'
+p 'p array.select(&:odd?)'
+p 'p array.select(&:even?)'
 p array.select(&:odd?)
 p array.select(&:even?)
 p '--------------------------------------------------------'
@@ -494,7 +494,7 @@ p array_r.reject { |e| array_r.count(e) == 3 }
 p '--------------------------------------------------------'
 
 p '69. Дан целочисленный массив. Найти среднее арифметическое модулей его элементов.'
-p 'p array.map { |e| e.abs }.sum.to_f / array.length'
+p 'p array.map(&:abs).sum.to_f / array.length'
 p array.map(&:abs).sum.to_f / array.length
 p '--------------------------------------------------------'
 
